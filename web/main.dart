@@ -1,63 +1,59 @@
 import 'package:angular2/angular2.dart';
 import 'package:angular2/router.dart';
-import 'package:router_demo/components/home/home.dart';
 
 import 'package:angular2/src/reflection/reflection.dart' show reflector;
 import 'package:angular2/src/reflection/reflection_capabilities.dart' show ReflectionCapabilities;
 
-@Component(
-  selector: 'foo'
-)
-@View(
-  template: 'foo {{id}}'
-)
-class FooCmp {
-  String id;
-  FooCmp(RouteParams pr) {
-    id = pr.get('id');
-    print(id);
-  }
-}
 
 @Component(
-  selector: 'bar'
+    selector: 'home'
 )
 @View(
-  template: 'bar'
+    template: '<home><h1>I am Home</h1><a router-link="child">Go Child</a><home>',
+    directives: const [RouterOutlet, RouterLink]
 )
-class BarCmp {}
+class Home {}
+
+//
+//
+//
 
 @Component(
-  selector: 'my-app'
+  selector: 'child'
 )
 @View(
-  template: '<button (click)="go()">Go</button><router-outlet></router-outlet><a router-link="bar">link</a>',
+    template: '<child><h1>I am Child</h1><a router-link="home">Go Home</a><child>',
+    directives: const [RouterOutlet, RouterLink]
+)
+class Child {}
+
+//
+//
+//
+
+@Component(
+  selector: 'index'
+)
+@View(
+  template: '''
+  <router-outlet></router-outlet>
+            ''',
   directives: const [RouterOutlet, RouterLink]
 )
-@RouteConfig(const [const {
-  'path': '/',
-  'component': HomeComp
-},
-const {
-  'path': 'foo/:id',
-  'component': FooCmp
-},
-const {
-  'path': 'bar',
-  'component': BarCmp,
-  'as': 'bar'
-}
-])
-class AppComp {
-  Router r;
-  AppComp(Router this.r);
+class Index {
+  Router router;
+
+  Index(Router this.router) {
+    router.config({ 'path': '/child', 'component': Child, 'alias': 'child'});
+    router.config({ 'path': '/', 'component': Home, 'alias': 'home'});
+  }
 
   go() {
-    r.navigate('bar');
+    router.navigate('child');
   }
 }
 
 main() {
   reflector.reflectionCapabilities = new ReflectionCapabilities();
-  bootstrap(AppComp, routerInjectables);
+  bootstrap(Index, routerInjectables);
 }

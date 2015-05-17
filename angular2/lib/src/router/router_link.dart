@@ -61,6 +61,8 @@ class RouterLink {
       // Keeping the link on the element to support contextual menu `copy link`
 
       // and other in-browser affordances.
+      print('newHref');
+      print(newHref);
       DOM.setAttribute(this._domEl, "href", newHref);
     }
   }
