@@ -47,10 +47,6 @@ class Index {
     router.config({ 'path': '/child', 'component': Child, 'alias': 'child'});
     router.config({ 'path': '/', 'component': Home, 'alias': 'home'});
   }
-
-  go() {
-    router.navigate('child');
-  }
 }
 
 main() {
