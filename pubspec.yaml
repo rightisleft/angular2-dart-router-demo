@@ -1,4 +1,4 @@
 name: router_demo
 dependencies:
-  angular2: "2.0.0-alpha.23"
+  angular2: "2.0.0-alpha.24"
   browser: "0.10.0+2"
