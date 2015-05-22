@@ -6,26 +6,34 @@ import 'package:angular2/src/reflection/reflection_capabilities.dart' show Refle
 
 
 @Component(
-    selector: 'home'
+    selector: 's-home'
 )
 @View(
-    template: '<home><h1>I am Home</h1><a router-link="child">Go Child</a><home>',
-    directives: const [RouterOutlet, RouterLink]
+    template: '<h1>I am Home</h1><a router-link="child">Go Child</a>',
+    directives: const [RouterLink]
 )
-class Home {}
+class Home {
+  Home(){
+    print('home init');
+  }
+}
 
 //
 //
 //
 
 @Component(
-  selector: 'child'
+  selector: 's-child'
 )
 @View(
-    template: '<child><h1>I am Child</h1><a router-link="home">Go Home</a><child>',
-    directives: const [RouterOutlet, RouterLink]
+    template: '<h1>I am Child</h1><a router-link="home">Go Home</a>',
+    directives: const [RouterLink]
 )
-class Child {}
+class Child {
+  Child() {
+    print('child init');
+  }
+}
 
 //
 //
@@ -38,14 +46,16 @@ class Child {}
   template: '''
   <router-outlet></router-outlet>
             ''',
-  directives: const [RouterOutlet, RouterLink]
+  directives: const [RouterOutlet]
 )
 class Index {
   Router router;
 
   Index(Router this.router) {
-    router.config({ 'path': '/child', 'component': Child, 'alias': 'child'});
-    router.config({ 'path': '/', 'component': Home, 'alias': 'home'});
+    router.config([
+      { 'path': '/child', 'component': Child, 'as': 'child'},
+      { 'path': '/', 'component': Home, 'as': 'home'}
+    ]);
   }
 }
 
