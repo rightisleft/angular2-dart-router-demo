@@ -4,12 +4,15 @@ import 'package:angular2/router.dart';
 import 'package:angular2/src/reflection/reflection.dart' show reflector;
 import 'package:angular2/src/reflection/reflection_capabilities.dart' show ReflectionCapabilities;
 
+String thing = "['./user']";
 
 @Component(
     selector: 's-home'
 )
 @View(
-    template: '<h1>I am Home</h1><a router-link="child">Go Child</a>',
+    template: '''
+  <h1>I am Home</h1><a [router-link]="['/child']">Go Child</a>
+            ''',
     directives: const [RouterLink]
 )
 class Home {
@@ -26,7 +29,9 @@ class Home {
   selector: 's-child'
 )
 @View(
-    template: '<h1>I am Child</h1><a router-link="home">Go Home</a>',
+    template: '''
+  <h1>I am Child</h1><a [router-link]="['/home']">Go Home</a>
+            ''',
     directives: const [RouterLink]
 )
 class Child {
@@ -50,11 +55,10 @@ class Child {
 )
 class Index {
   Router router;
-
   Index(Router this.router) {
     router.config([
       { 'path': '/child', 'component': Child, 'as': 'child'},
-      { 'path': '/', 'component': Home, 'as': 'home'}
+      { 'path': '/', 'component': Home, 'as': 'taco'}
     ]);
   }
 }
